@@ -1,0 +1,576 @@
+@import "tailwindcss";
+
+#root.oasis-booking-app {
+  font-family:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+}
+
+#root.oasis-booking-app button {
+  cursor: pointer;
+}
+
+#root.oasis-booking-app button:disabled {
+  cursor: not-allowed;
+}
+
+#root.oasis-booking-app ::selection {
+  background: #f5c400;
+  color: #000;
+}
+
+#root.oasis-booking-app ::-moz-selection {
+  background: #f5c400;
+  color: #000;
+}
+
+/*
+ * The booking form is embedded in arbitrary WordPress themes.  Its root is
+ * deliberately reset at the mount point so theme rules for #root, main, form
+ * controls and generic buttons cannot create a second page container.
+ */
+#root.oasis-booking-app {
+  display: block;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  border: 0 !important;
+  outline: 0;
+  box-shadow: none !important;
+  background: transparent;
+  color: #222;
+  isolation: isolate;
+}
+
+#root.oasis-booking-app,
+#root.oasis-booking-app *,
+#root.oasis-booking-app *::before,
+#root.oasis-booking-app *::after {
+  box-sizing: border-box;
+}
+
+#root.oasis-booking-app .oasis-booking-shell {
+  display: block;
+  width: 100%;
+  margin: 0 auto;
+  border: 0;
+  outline: 0;
+  box-shadow: none;
+  background: transparent;
+}
+
+#root.oasis-booking-app .oasis-plugin-loader {
+  display: flex;
+  min-height: 180px;
+  align-items: center;
+  justify-content: center;
+  color: #6d6d6d;
+  font-size: 14px;
+}
+
+#root.oasis-booking-app .oasis-plugin-loader::before {
+  width: 18px;
+  height: 18px;
+  margin-right: 10px;
+  border: 2px solid #dfddd6;
+  border-top-color: #a07c18;
+  border-radius: 50%;
+  content: "";
+  animation: oasis-spin 750ms linear infinite;
+}
+
+@keyframes oasis-spin {
+  to { transform: rotate(360deg); }
+}
+
+#root.oasis-booking-app .oasis-service-toggle {
+  overflow: hidden;
+  border: 1px solid #dfdfdb;
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 5px 18px rgba(24, 24, 20, 0.025);
+}
+
+#root.oasis-booking-app .oasis-service-section {
+  margin: 0 0 28px !important;
+}
+
+#root.oasis-booking-app .oasis-service-option {
+  display: block;
+  width: 100%;
+  min-height: 86px;
+  margin: 0;
+  padding: 18px 20px;
+  border: 0;
+  border-radius: 0;
+  background: #fff;
+  color: #222;
+  font: inherit;
+  text-align: left;
+  box-shadow: none;
+  transition: background-color 180ms ease, box-shadow 180ms ease;
+}
+
+#root.oasis-booking-app .oasis-service-option + .oasis-service-option {
+  border-top: 1px solid #e8e8e4;
+}
+
+#root.oasis-booking-app .oasis-service-option:hover {
+  background: #fafaf8;
+}
+
+#root.oasis-booking-app .oasis-service-option.is-selected {
+  background: #fffdf5;
+  box-shadow: inset 3px 0 0 #c9a227;
+}
+
+#root.oasis-booking-app .oasis-service-option:focus-visible,
+#root.oasis-booking-app .oasis-field:focus-visible,
+#root.oasis-booking-app .oasis-primary-button:focus-visible {
+  /* outline: 3px solid rgba(201, 162, 39, 0.42);
+  outline-offset: 3px; */
+}
+
+#root.oasis-booking-app .oasis-journey-card {
+  position: relative;
+  width: 100%;
+}
+
+/* A single card language prevents the stacked, theme-like form borders. */
+#root.oasis-booking-app .oasis-card {
+    width: 100%;
+    margin-bottom: 26px !important;
+    border: 0 !important;
+    outline: 0 !important;
+    border-radius: 16px !important;
+    background: #fff !important;
+    /* box-shadow: 0 8px 28px rgba(24, 24, 20, 0.045) !important; */
+}
+
+#root.oasis-booking-app .oasis-card > :first-child {
+  border-color: #efeee9;
+}
+
+#root.oasis-booking-app .oasis-additional-details {
+  margin-top: 28px;
+  padding: 24px;
+  border: 1px solid #eeece6;
+  border-radius: 12px;
+  background: #fcfcfa;
+}
+
+#root.oasis-booking-app .oasis-airport-flight {
+  margin-top: 20px;
+  padding: 20px;
+  border: 1px solid #eadfbb;
+  border-radius: 12px;
+  background: #fffdf6;
+}
+
+#root.oasis-booking-app .oasis-airport-flight > div:first-child {
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+#root.oasis-booking-app .oasis-choice-toggle {
+  border: 1px solid #e4e3dd;
+  background: #f5f5f1;
+}
+
+#root.oasis-booking-app .oasis-choice-toggle button {
+  color: #5f5f5b !important;
+}
+
+#root.oasis-booking-app .oasis-choice-toggle button[class*="bg-white"] {
+  color: #222 !important;
+}
+
+#root.oasis-booking-app .oasis-journey-card--essential {
+  border-color: #e1e1dc;
+  padding: 30px 32px !important;
+}
+
+#root.oasis-booking-app .oasis-field {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  color: #222;
+  font: inherit;
+  line-height: 1.4;
+  box-shadow: none;
+}
+
+#root.oasis-booking-app .oasis-field:focus {
+  border-color: #9e7b22;
+  outline: 0;
+  box-shadow: 0 0 0 3px rgba(201, 162, 39, 0.13);
+}
+
+#root.oasis-booking-app input:not([type="checkbox"]),
+#root.oasis-booking-app select,
+#root.oasis-booking-app textarea {
+  max-width: 100%;
+  font: inherit;
+  color: #222;
+}
+
+#root.oasis-booking-app .oasis-checkbox {
+  appearance: auto;
+  accent-color: #9e7b22;
+}
+
+#root.oasis-booking-app .oasis-primary-button {
+  border: 1px solid #222 !important;
+  background: #222 !important;
+  color: #fff !important;
+  font: inherit;
+  line-height: 1.2;
+  text-decoration: none;
+  box-shadow: 0 5px 14px rgba(0, 0, 0, 0.12);
+}
+
+#root.oasis-booking-app .oasis-primary-button:hover {
+  border-color: #111 !important;
+  background: #111 !important;
+  color: #fff !important;
+}
+
+#root.oasis-booking-app .oasis-primary-button:focus,
+#root.oasis-booking-app .oasis-primary-button:active {
+  border-color: #111 !important;
+  background: #111 !important;
+  color: #fff !important;
+}
+
+#root.oasis-booking-app .oasis-quantity-card {
+  border: none;
+  background: #fcfcfa;
+}
+
+#root.oasis-booking-app .oasis-quantity-card > div:last-child {
+  border: none;
+  background: #fff;
+}
+
+#root.oasis-booking-app .oasis-quantity-button {
+  border: 1px solid transparent;
+  background: #f2f1ec;
+  color: #222 !important;
+  font-weight: 700;
+  line-height: 1;
+}
+
+#root.oasis-booking-app .oasis-quantity-button:hover:not(:disabled) {
+  border-color: #c9a227;
+  background: #fffaf0;
+}
+
+#root.oasis-booking-app .oasis-vehicle-option {
+  padding: 20px;
+  border: 1px solid #e5e4df;
+  border-radius: 13px;
+  background: #fff;
+  transition: border-color 180ms ease, box-shadow 180ms ease, background-color 180ms ease;
+}
+
+#root.oasis-booking-app .oasis-vehicle-option.is-selected {
+  border-color: #c9a227;
+  background: #fffdf5;
+  box-shadow: 0 0 0 3px rgba(201, 162, 39, 0.12);
+}
+
+#root.oasis-booking-app .oasis-vehicle-option.is-unavailable {
+  background: #fafafa;
+  opacity: 0.72;
+}
+
+#root.oasis-booking-app .oasis-availability-badge {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  min-height: 26px;
+  padding: 4px 9px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+#root.oasis-booking-app .oasis-availability-badge.is-suitable {
+  background: #edf8ef;
+  color: #226b33;
+}
+
+#root.oasis-booking-app .oasis-availability-badge.is-unsuitable {
+  background: #fff0f0;
+  color: #a52626;
+}
+
+#root.oasis-booking-app .oasis-vehicle-capacity {
+  padding: 10px 6px;
+  border-radius: 9px;
+  background: #f7f7f4;
+}
+
+#root.oasis-booking-app .oasis-vehicle-capacity strong,
+#root.oasis-booking-app .oasis-vehicle-capacity span {
+  display: block;
+}
+
+#root.oasis-booking-app .oasis-vehicle-capacity strong {
+  color: #222;
+  font-size: 14px;
+}
+
+#root.oasis-booking-app .oasis-vehicle-capacity span {
+  margin-top: 3px;
+  color: #777;
+  font-size: 10px;
+  line-height: 1.25;
+}
+
+#root.oasis-booking-app .oasis-vehicle-reason {
+  margin: 14px 0 0;
+  color: #9d3030;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+#root.oasis-booking-app .oasis-vehicle-select-button {
+  width: 100%;
+  min-height: 44px;
+  margin-top: 16px;
+  border: 1px solid #292929;
+  border-radius: 9px;
+  background: #fff;
+  color: #222 !important;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+#root.oasis-booking-app .oasis-vehicle-select-button:hover:not(:disabled),
+#root.oasis-booking-app .oasis-vehicle-select-button.is-selected {
+  border-color: #c9a227;
+  background: #fffaf0;
+}
+
+#root.oasis-booking-app .oasis-vehicle-select-button:disabled {
+  cursor: not-allowed;
+  border-color: #ddd;
+  color: #999 !important;
+}
+
+#root.oasis-booking-app .oasis-notice {
+  padding: 14px 16px;
+  border: 1px solid;
+  border-radius: 11px;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+#root.oasis-booking-app .oasis-notice.is-error {
+  border-color: #efc2c2;
+  background: #fff6f6;
+  color: #9f2424;
+}
+
+#root.oasis-booking-app .oasis-notice.is-success {
+  border-color: #b9ddbf;
+  background: #f2faf3;
+  color: #236a32;
+}
+
+@media (max-width: 640px) {
+  #root.oasis-booking-app .oasis-journey-card--essential {
+    padding: 24px 20px !important;
+  }
+}
+
+/* Google owns the visible field within this custom element. */
+#root.oasis-booking-app .oasis-google-address {
+  display: block;
+  width: 100%;
+  border: 0 !important;
+  outline: 0 !important;
+  border-radius: 10px;
+  box-shadow: inset 0 0 0 1px #d8d8d8 !important;
+}
+
+#root.oasis-booking-app .oasis-google-address:focus-within {
+  outline: 0 !important;
+  box-shadow: inset 0 0 0 1px #9e7b22 !important;
+}
+
+#root.oasis-booking-app .oasis-booking-progress {
+  margin-bottom: 36px !important;
+}
+
+#root.oasis-booking-app .oasis-choice-toggle button {
+  border: 0 !important;
+  background: transparent !important;
+}
+
+#root.oasis-booking-app .oasis-choice-toggle button[class*="bg-white"] {
+  background: #fff !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
+}
+
+#root.oasis-booking-app .oasis-luggage-guide {
+  border: 0 !important;
+  border-radius: 12px;
+  background: #f7f7f4 !important;
+}
+
+#root.oasis-booking-app .oasis-luggage-guide p:last-child {
+  max-width: 38ch;
+  line-height: 1.65;
+}
+
+#root.oasis-booking-app .oasis-luggage-total {
+  margin-top: 5px;
+  border-top: 1px solid #ebeae5 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#root.oasis-booking-app .oasis-quote-summary > div:not(:first-child) {
+  margin-top: 20px;
+  padding: 18px;
+  border: 0 !important;
+  border-radius: 12px;
+  background: #fafaf8;
+}
+
+#root.oasis-booking-app .oasis-quote-summary .oasis-primary-button {
+  margin-top: 22px;
+}
+
+@media (min-width: 640px) {
+  #root.oasis-booking-app .oasis-progress-desktop {
+    display: flex !important;
+  }
+
+  #root.oasis-booking-app .oasis-progress-mobile {
+    display: none !important;
+  }
+
+  #root.oasis-booking-app .oasis-progress-desktop span {
+    font-size: 14px !important;
+  }
+}
+
+@media (max-width: 639px) {
+  #root.oasis-booking-app .oasis-progress-desktop {
+    display: none !important;
+  }
+
+  #root.oasis-booking-app .oasis-progress-mobile {
+    display: block !important;
+  }
+}
+
+/* A short transition confirms movement between booking stages without flash. */
+#root.oasis-booking-app .oasis-step-transition {
+  animation: oasis-step-enter 260ms ease-out both;
+}
+
+@keyframes oasis-step-enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Keep the selected toggle inside the control instead of rounding over its edge. */
+#root.oasis-booking-app .oasis-choice-toggle {
+  overflow: hidden;
+  border-radius: 10px !important;
+}
+
+#root.oasis-booking-app .oasis-choice-toggle button {
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+#root.oasis-booking-app .oasis-vehicle-image {
+  display: block;
+  width: 132px;
+  height: 82px;
+  flex: 0 0 auto;
+  object-fit: contain;
+  border-radius: 10px;
+  background: #f7f7f4;
+}
+
+#root.oasis-booking-app .oasis-vehicle-top p:first-child {
+  font-size: 18px !important;
+  letter-spacing: -0.015em;
+}
+
+#root.oasis-booking-app .oasis-vehicle-top p:nth-child(2) {
+  font-size: 14px !important;
+}
+
+/* Vehicle details stay compact on desktop instead of reading as large boxes. */
+@media (min-width: 640px) {
+  #root.oasis-booking-app .oasis-vehicle-option {
+    padding: 16px 18px;
+  }
+
+  #root.oasis-booking-app .oasis-vehicle-option .grid {
+    display: flex;
+    justify-content: flex-start;
+    gap: 18px;
+  }
+
+  #root.oasis-booking-app .oasis-vehicle-capacity {
+    display: flex;
+    align-items: baseline;
+    gap: 5px;
+    padding: 0;
+    background: transparent;
+  }
+
+  #root.oasis-booking-app .oasis-vehicle-capacity strong,
+  #root.oasis-booking-app .oasis-vehicle-capacity span {
+    display: inline;
+  }
+
+  #root.oasis-booking-app .oasis-vehicle-select-button {
+    width: auto;
+    min-width: 148px;
+    margin-top: 14px;
+  }
+}
+
+@media (max-width: 639px) {
+  #root.oasis-booking-app .oasis-vehicle-image {
+    width: 112px;
+    height: 72px;
+  }
+
+  #root.oasis-booking-app .oasis-vehicle-top {
+    gap: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #root.oasis-booking-app .oasis-step-transition {
+    animation: none;
+  }
+}
