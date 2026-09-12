@@ -438,6 +438,29 @@ function oasis_render_bookings_admin_page() {
                 : '—'
         );
 
+        /*
+         * Additional stops (Hourly / As Directed only).
+         * Ordered list, shown only when stops exist.
+         */
+        $booking_stops = oasis_get_booking_stops( $booking_data );
+
+        if ( ! empty( $booking_stops ) ) {
+
+            $stops_display = '';
+
+            foreach ( $booking_stops as $stop_index => $stop_value ) {
+                $stops_display .=
+                    ( $stop_index + 1 ) . '. ' .
+                    esc_html( $stop_value ) .
+                    '<br />';
+            }
+
+            oasis_admin_detail_row(
+                'Additional Stops',
+                trim( $stops_display )
+            );
+        }
+
         echo '</tbody>';
         echo '</table>';
 

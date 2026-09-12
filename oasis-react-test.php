@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Oasis React Booking Plugin
  * Description: A WordPress plugin that integrates a React-based booking system for Oasis.
- * Version: 2.0.3
+ * Version: 2.0.8
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -29,14 +29,14 @@ function oasis_react_booking_assets() {
         'oasis-react-booking',
         plugin_dir_url( __FILE__ ) . 'dist/app.css',
         array(),
-        '2.0.3'
+        '2.0.8'
     );
 
    wp_enqueue_script(
     'oasis-react-booking',
     plugin_dir_url( __FILE__ ) . 'dist/app.js',
     array(),
-    '2.0.3',
+    '2.0.8',
     true
 );
 
@@ -105,17 +105,55 @@ function oasis_get_vehicle_images() {
 
         $product = wc_get_product( $product_post->ID );
 
-        if ( ! $product || ! $product->get_image_id() ) {
+        if ( ! $product ) {
             continue;
         }
 
-        $image_url = wp_get_attachment_image_url(
-            $product->get_image_id(),
-            'woocommerce_thumbnail'
-        );
+        /*
+         * The featured/main product image must always come first.
+         */
+        $vehicle_image_urls = array();
 
-        if ( $image_url ) {
-            $images[ $vehicle_key ] = $image_url;
+        $featured_image_id = $product->get_image_id();
+
+        if ( $featured_image_id ) {
+
+            $featured_image_url = wp_get_attachment_image_url(
+                $featured_image_id,
+                'woocommerce_thumbnail'
+            );
+
+            if ( $featured_image_url ) {
+                $vehicle_image_urls[] = $featured_image_url;
+            }
+        }
+
+        /*
+         * Add only the first gallery image that is not already
+         * displayed, so the featured image is never shown twice.
+         */
+        $gallery_image_ids = $product->get_gallery_image_ids();
+
+        foreach ( $gallery_image_ids as $gallery_image_id ) {
+
+            if ( (int) $gallery_image_id === (int) $featured_image_id ) {
+                continue;
+            }
+
+            $gallery_image_url = wp_get_attachment_image_url(
+                $gallery_image_id,
+                'woocommerce_thumbnail'
+            );
+
+            if ( $gallery_image_url ) {
+                $vehicle_image_urls[] = $gallery_image_url;
+            }
+
+            break;
+        }
+
+        if ( ! empty( $vehicle_image_urls ) ) {
+            $images[ $vehicle_key ] = $vehicle_image_urls;
         }
     }
 

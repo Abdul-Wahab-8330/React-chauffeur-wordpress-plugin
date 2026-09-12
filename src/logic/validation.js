@@ -86,6 +86,29 @@ export function validateBooking(form, rules) {
 
 
     /*
+     * Outbound pickup cannot be in the past.
+     *
+     * Dates and times use the application's existing naive local
+     * representation (YYYY-MM-DD + HH:MM), parsed as local time.
+     */
+    const pickupDateTime =
+        new Date(
+            `${form.pickupDate}T${form.pickupTime}`
+        )
+
+    if (
+        !Number.isNaN(pickupDateTime.getTime()) &&
+        pickupDateTime.getTime() < Date.now()
+    ) {
+        return {
+            valid: false,
+            field: "pickupDate",
+            message: "Pickup date and time cannot be in the past.",
+        }
+    }
+
+
+    /*
      * Passengers
      */
     const passengers =

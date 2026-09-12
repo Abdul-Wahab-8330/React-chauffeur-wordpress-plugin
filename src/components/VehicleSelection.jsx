@@ -9,41 +9,52 @@ function VehicleSelection({ vehicles, vehicleImages, recommendations, selectedVe
                 </p>
             </div>
 
-            <div className="grid gap-3">
+            <div className="oasis-vehicle-grid">
                 {recommendations.map((item) => {
                     const vehicle = vehicles[item.key]
                     const selected = selectedVehicle === item.key
                     const vehicleImage = vehicleImages[item.key]
+                    const images = Array.isArray(vehicleImage)
+                        ? vehicleImage.filter(Boolean)
+                        : vehicleImage
+                            ? [vehicleImage]
+                            : []
 
                     return (
                         <article
                             key={item.key}
                             className={`oasis-vehicle-option ${selected ? "is-selected" : ""} ${!item.suitable ? "is-unavailable" : ""}`}
                         >
-                            <div className="oasis-vehicle-top flex items-start justify-between gap-4">
-                                <div className="flex min-w-0 items-center gap-4">
-                                    {vehicleImage && (
-                                        <img
-                                            src={vehicleImage}
-                                            alt={vehicle.name}
-                                            className="oasis-vehicle-image"
-                                        />
-                                    )}
+                            <div className="oasis-vehicle-head">
+                                <p className="oasis-vehicle-name">{vehicle.name}</p>
 
-                                    <div className="min-w-0">
-                                        <p className="m-0 text-[16px] font-semibold text-[#222]">{vehicle.name}</p>
-                                        <p className="m-0 mt-1 text-[13px] text-[#6d6d6d]">{vehicle.category}</p>
-                                    </div>
-                                </div>
-
-                                <span className={`oasis-availability-badge ${item.suitable ? "is-suitable" : "is-unsuitable"}`}>
+                                <span className={`oasis-availability-badge shrink-0 ${item.suitable ? "is-suitable" : "is-unsuitable"}`}>
                                     {item.suitable ? "Suitable" : "Not suitable"}
                                 </span>
                             </div>
 
-                            <div className="mt-4 grid grid-cols-3 gap-2 text-center">
+                            {images.length > 0 && (
+                                <div className="oasis-vehicle-images">
+                                    {images.map((url, index) => (
+                                        <img
+                                            key={index}
+                                            src={url}
+                                            alt={
+                                                index === 0
+                                                    ? vehicle.name
+                                                    : `${vehicle.name} - view ${index + 1}`
+                                            }
+                                            className={`oasis-vehicle-image ${index === 0 ? "is-primary" : "is-secondary"}`}
+                                        />
+                                    ))}
+                                </div>
+                            )}
+
+                            <p className="oasis-vehicle-category">{vehicle.category}</p>
+
+                            <div className="oasis-vehicle-capacity-row">
                                 <div className="oasis-vehicle-capacity"><strong>{vehicle.capacity.passengers}</strong><span>Passengers</span></div>
-                                <div className="oasis-vehicle-capacity"><strong>{vehicle.capacity.luggageUnits}</strong><span>Luggage units</span></div>
+                                <div className="oasis-vehicle-capacity"><strong>{vehicle.capacity.luggageUnits}</strong><span>Luggage</span></div>
                                 <div className="oasis-vehicle-capacity"><strong>{vehicle.capacity.babySeatsAllowed ? "Yes" : "No"}</strong><span>Baby seats</span></div>
                             </div>
 
@@ -51,14 +62,16 @@ function VehicleSelection({ vehicles, vehicleImages, recommendations, selectedVe
                                 <p className="oasis-vehicle-reason">{item.reasons.join(" ")}</p>
                             )}
 
-                            <button
-                                type="button"
-                                disabled={!item.suitable}
-                                onClick={() => onSelect(item.key)}
-                                className={`oasis-vehicle-select-button ${selected ? "is-selected" : ""}`}
-                            >
-                                {selected ? "Selected" : "Select vehicle"}
-                            </button>
+                            <div className="oasis-vehicle-actions">
+                                <button
+                                    type="button"
+                                    disabled={!item.suitable}
+                                    onClick={() => onSelect(item.key)}
+                                    className={`oasis-vehicle-select-button ${selected ? "is-selected" : ""}`}
+                                >
+                                    {selected ? "Selected" : "Select vehicle"}
+                                </button>
+                            </div>
                         </article>
                     )
                 })}

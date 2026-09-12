@@ -293,6 +293,45 @@ function oasis_get_vehicle_label($vehicle_key)
 
 
 /**
+ * Ordered "Additional Stops" list from a decoded booking_data
+ * payload (or an empty array when none exist).
+ *
+ * Stops live inside booking_data for Hourly / As Directed
+ * bookings only. Non-array or non-string data is rejected
+ * defensively so old bookings and malformed payloads are safe.
+ */
+function oasis_get_booking_stops( $payload )
+{
+
+    if (
+        empty( $payload['stops'] ) ||
+        ! is_array( $payload['stops'] )
+    ) {
+        return array();
+    }
+
+    $stops = array();
+
+    foreach ( $payload['stops'] as $stop_value ) {
+
+        if ( ! is_string( $stop_value ) ) {
+            continue;
+        }
+
+        $stop_value = sanitize_text_field( $stop_value );
+
+        if ( '' === $stop_value ) {
+            continue;
+        }
+
+        $stops[] = $stop_value;
+    }
+
+    return $stops;
+}
+
+
+/**
  * Build the customer-facing booking details once.
  *
  * The Oasis booking table remains the source of truth.
@@ -373,6 +412,27 @@ function oasis_get_booking_display_data($booking)
     if ((int) $booking['booster_seats'] > 0) {
         $display_data['Forward-facing child seats'] =
             (string) $booking['booster_seats'];
+    }
+
+    /*
+     * Additional stops (Hourly / As Directed only).
+     * Ordered list, shown only when stops exist.
+     */
+    $booking_stops = oasis_get_booking_stops( $payload );
+
+    if ( !empty( $booking_stops ) ) {
+
+        $stops_display = '';
+
+        foreach ( $booking_stops as $stop_index => $stop_value ) {
+            $stops_display .=
+                ( $stop_index + 1 ) . '. ' .
+                esc_html( $stop_value ) .
+                '<br />';
+        }
+
+        $display_data['Additional Stops'] =
+            trim( $stops_display );
     }
 
     if (!empty($booking['return_datetime'])) {
@@ -1152,9 +1212,7 @@ function oasis_register_booking_routes()
         array(
             'methods' => 'POST',
             'callback' => 'oasis_create_booking',
-            'permission_callback' => function () {
-                return is_user_logged_in();
-            },
+            'permission_callback' => 'oasis_verify_booking_nonce',
         )
     );
 }
@@ -1166,6 +1224,21 @@ add_action(
 
 
 /**
+ * Verify the WordPress REST nonce for booking creation.
+ *
+ * Login is optional: both logged-in users and guests may create
+ * bookings, but every request must still carry a valid wp_rest
+ * nonce so the existing CSRF/anti-forgery protection is preserved.
+ */
+function oasis_verify_booking_nonce(WP_REST_Request $request)
+{
+    $nonce = $request->get_header('X-WP-Nonce');
+
+    return (bool) wp_verify_nonce($nonce, 'wp_rest');
+}
+
+
+/**
  * Create an Oasis booking.
  */
 function oasis_create_booking(WP_REST_Request $request)
@@ -1173,17 +1246,12 @@ function oasis_create_booking(WP_REST_Request $request)
 
     global $wpdb;
 
-    $user_id = get_current_user_id();
-
-    if (!$user_id) {
-        return new WP_Error(
-            'oasis_not_logged_in',
-            'You must be logged in to create a booking.',
-            array(
-                'status' => 401,
-            )
-        );
-    }
+    /*
+     * Login is optional: logged-in users book with their WordPress
+     * user ID and guests with 0. The user ID is always determined
+     * here on the server and never taken from the request data.
+     */
+    $user_id = get_current_user_id() ?: 0;
 
     $data = $request->get_json_params();
 
@@ -1195,6 +1263,43 @@ function oasis_create_booking(WP_REST_Request $request)
                 'status' => 400,
             )
         );
+    }
+
+    /*
+     * Additional stops (Hourly / As Directed only).
+     *
+     * Ordered free-text list, informational only: values are
+     * sanitized as plain text, non-string/empty entries dropped,
+     * and the list ignored entirely for non-hourly bookings.
+     */
+    $stops = array();
+
+    if (
+        'hourly' === sanitize_text_field(
+            $data['bookingType'] ?? ''
+        ) &&
+        isset( $data['stops'] ) &&
+        is_array( $data['stops'] )
+    ) {
+        foreach ( $data['stops'] as $stop_value ) {
+
+            if ( ! is_string( $stop_value ) ) {
+                continue;
+            }
+
+            $stop_value = sanitize_text_field( $stop_value );
+
+            if ( '' === $stop_value ) {
+                continue;
+            }
+
+            $stops[] = $stop_value;
+
+            /* Safety cap against oversized payloads. */
+            if ( count( $stops ) >= 30 ) {
+                break;
+            }
+        }
     }
 
     /*
@@ -1650,8 +1755,11 @@ function oasis_create_booking(WP_REST_Request $request)
 
     /*
      * Preserve the complete original
-     * booking payload.
+     * booking payload, with the sanitized
+     * ordered stop list.
      */
+    $data['stops'] = $stops;
+
     $booking_data = wp_json_encode(
         $data
     );

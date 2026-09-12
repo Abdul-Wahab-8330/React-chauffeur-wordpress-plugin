@@ -9,7 +9,10 @@ import BabySeats from "./components/BabySeats"
 import VehicleSelection from "./components/VehicleSelection"
 import ReturnTrip from "./components/ReturnTrip"
 import SpecialInstructions from "./components/SpecialInstructions"
+import AdditionalStops from "./components/AdditionalStops"
 import QuoteSummary from "./components/QuoteSummary"
+import AuthCheckpoint from "./components/AuthCheckpoint"
+import { createPortal } from "react-dom"
 
 import { vehicles } from "./data/vehicles"
 import { calculateRouteDistance } from "./google/routes"
@@ -325,6 +328,7 @@ function App() {
   const [currentStep, setCurrentStep] = useState(1)
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [authChecked, setAuthChecked] = useState(false)
+  const [showAuthChoice, setShowAuthChoice] = useState(false)
 
   const [form, setForm] = useState({
     pickup: "",
@@ -363,6 +367,8 @@ function App() {
     vehicle: "",
 
     specialInstructions: "",
+
+    stops: [],
   })
 
   /*
@@ -427,6 +433,19 @@ function App() {
 
   const handleBookingTypeChange = (value) => {
     clearFeedback()
+
+    if (value !== "hourly") {
+      /*
+       * Stops exist only for Hourly / As Directed: switching to
+       * Point-to-Point clears them so stale stops can never be
+       * submitted or stored as Point-to-Point booking data.
+       */
+      setForm((current) => ({
+        ...current,
+        stops: [],
+      }))
+    }
+
     setBookingType(value)
   }
 
@@ -435,6 +454,24 @@ function App() {
       setIsCalculating(false)
     }
   }, [message, quote])
+
+  /*
+   * Prevent background page scrolling while the auth-choice dialog
+   * is open; the previous body overflow is restored on close.
+   */
+  useEffect(() => {
+    if (!showAuthChoice) {
+      return undefined
+    }
+
+    const previousOverflow = document.body.style.overflow
+
+    document.body.style.overflow = "hidden"
+
+    return () => {
+      document.body.style.overflow = previousOverflow
+    }
+  }, [showAuthChoice])
 
   useEffect(() => {
     if (!message) {
@@ -514,7 +551,12 @@ function App() {
       return
     }
 
-    redirectToMyAccount()
+    /*
+     * Login is optional: logged-out users choose between the
+     * existing My Account login/registration flow and continuing
+     * as a guest without an account.
+     */
+    setShowAuthChoice(true)
   }
 
   const handleDetailsContinue = () => {
@@ -689,6 +731,11 @@ function App() {
 
       specialInstructions:
         form.specialInstructions,
+
+      stops:
+        bookingType === "hourly"
+          ? (form.stops || [])
+          : [],
 
       hours: Number(hours || 0),
 
@@ -1656,6 +1703,36 @@ function App() {
 
 
 
+          {/* Additional stops (Hourly / As Directed only) */}
+
+          {bookingType === "hourly" && (
+            <AdditionalStops
+              stops={form.stops || []}
+              onAddStop={() =>
+                updateForm("stops", [
+                  ...(form.stops || []),
+                  "",
+                ])
+              }
+              onRemoveStop={(index) =>
+                updateForm(
+                  "stops",
+                  (form.stops || []).filter(
+                    (_, i) => i !== index
+                  )
+                )
+              }
+              onStopChange={(index, value) =>
+                updateForm(
+                  "stops",
+                  (form.stops || []).map((stop, i) =>
+                    i === index ? value : stop
+                  )
+                )
+              }
+            />
+          )}
+
           {/* Special instructions */}
 
           {rules.specialInstructions?.enabled && (
@@ -1841,6 +1918,45 @@ function App() {
           )}
         </div>
       )}
+
+      {/*
+       * Authentication choice modal (logged-out users).
+       *
+       * Rendered through createPortal into document.body: the step
+       * transition animation on <main> makes it a containing block
+       * for position:fixed, which anchored the old overlay to the
+       * scroll position instead of the viewport. The portal also
+       * keeps the dialog out of reach of theme CSS scoped to #root.
+       */}
+
+      {showAuthChoice &&
+        createPortal(
+          <div className="oasis-auth-overlay">
+            <div
+              role="dialog"
+              aria-modal="true"
+              className="oasis-auth-dialog"
+            >
+              <button
+                type="button"
+                onClick={() => setShowAuthChoice(false)}
+                aria-label="Close"
+                className="oasis-auth-close"
+              >
+                ✕
+              </button>
+
+              <AuthCheckpoint
+                onLogin={redirectToMyAccount}
+                onGuest={() => {
+                  setShowAuthChoice(false)
+                  setCurrentStep(2)
+                }}
+              />
+            </div>
+          </div>,
+          document.body
+        )}
 
       </main>
     </>

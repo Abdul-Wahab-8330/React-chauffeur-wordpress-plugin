@@ -26,6 +26,31 @@ function getSuburb(place) {
 }
 
 
+/*
+ * Today's date and the current time in the browser's local time,
+ * formatted with the application's existing naive representation
+ * (YYYY-MM-DD / HH:MM) used by the date/time inputs and validation.
+ */
+function getTodayDateString() {
+    const now = new Date()
+
+    const year = String(now.getFullYear()).padStart(4, "0")
+    const month = String(now.getMonth() + 1).padStart(2, "0")
+    const day = String(now.getDate()).padStart(2, "0")
+
+    return `${year}-${month}-${day}`
+}
+
+function getCurrentTimeString() {
+    const now = new Date()
+
+    const hours = String(now.getHours()).padStart(2, "0")
+    const minutes = String(now.getMinutes()).padStart(2, "0")
+
+    return `${hours}:${minutes}`
+}
+
+
 function JourneyDetails({
     form,
     onChange,
@@ -207,6 +232,7 @@ function JourneyDetails({
                             type="date"
                             id="oasis-pickup-date"
                             value={form.pickupDate}
+                            min={getTodayDateString()}
                             onChange={(e) =>
                                 update(
                                     "pickupDate",
@@ -241,6 +267,12 @@ function JourneyDetails({
                             type="time"
                             id="oasis-pickup-time"
                             value={form.pickupTime}
+                            min={
+                                form.pickupDate ===
+                                getTodayDateString()
+                                    ? getCurrentTimeString()
+                                    : undefined
+                            }
                             onChange={(e) =>
                                 update(
                                     "pickupTime",
