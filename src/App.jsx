@@ -1527,12 +1527,13 @@ function App() {
 
       {/* Header */}
 
-      <header className="mb-7">
-        <h2 className="m-0 mb-[6px] text-[30px] font-semibold tracking-[-0.025em] text-[#222]">
+      <header className="mb-9">
+        <p className="oasis-eyebrow mb-2">Oasis Chauffeur</p>
+        <h2 className="m-0 mb-[8px] text-[32px] font-semibold tracking-[-0.03em] text-[#222] sm:text-[36px]">
           {rules.labels.title}
         </h2>
 
-        <p className="m-0 text-[13px] text-[#666]">
+        <p className="m-0 text-[14px] leading-[1.6] text-[#77776f]">
           {rules.labels.subtitle}
         </p>
       </header>
@@ -1567,10 +1568,10 @@ function App() {
             type="button"
             onClick={handleFirstStepContinue}
             disabled={!authChecked}
-            className="oasis-primary-button mt-6 flex min-h-[56px] w-full items-center justify-center rounded-[12px] px-5 text-[15px] font-semibold transition"
+            className="oasis-primary-button mt-7 w-full"
           >
             Continue
-            <span className="ml-2">→</span>
+            <span aria-hidden="true">→</span>
           </button>
         </>
       )}
@@ -1606,14 +1607,18 @@ function App() {
 
 
           {bookingType === "hourly" && (
-            <section className="mb-[14px] rounded-[8px] bg-white px-8 py-6 border-none">
+            <section className="oasis-card oasis-hours-card mb-[28px] p-6 sm:p-7">
 
-              <div className="mb-[18px]">
-                <h3 className="m-0 mb-[5px] text-[19px] font-semibold">
+              <div className="mb-5">
+                <p className="oasis-eyebrow">
                   Hourly / As Directed
+                </p>
+
+                <h3 className="oasis-section-title">
+                  Select your duration
                 </h3>
 
-                <p className="m-0 text-[12px] text-[#6d6d6d]">
+                <p className="oasis-section-description">
                   Minimum {rules.hourly.minimumHours} hours,
                   maximum {rules.hourly.maximumHours} hours
                   and {rules.hourly.maximumDistanceKm} km.
@@ -1626,7 +1631,7 @@ function App() {
                   clearFeedback()
                   setHours(e.target.value)
                 }}
-                className="w-full min-h-[46px] rounded-[5px] border border-[#d8d8d8] bg-white px-3 py-[10px] outline-none"
+                className="oasis-field"
               >
                 <option value="">
                   Select hours
@@ -1758,14 +1763,14 @@ function App() {
 
 
 
-          <div className="w-full mt-6 flex flex-col gap-3 border-[#eeeeee] pt-5">
+          <div className="w-full mt-7 flex flex-col gap-3">
             <button
               type="button"
               onClick={() => {
                 clearFeedback()
                 setCurrentStep(1)
               }}
-              className="min-h-[52px] w-full rounded-[10px] border border-[#d9d9d9] bg-white px-5 text-[15px] font-semibold text-[#222] transition hover:bg-[#f7f7f5] sm:w-full"
+              className="oasis-secondary-button w-full"
             >
               ← Back
             </button>
@@ -1773,10 +1778,10 @@ function App() {
             <button
               type="button"
               onClick={handleDetailsContinue}
-              className="oasis-primary-button min-h-[52px] w-full rounded-[10px] px-5 text-[15px] font-semibold shadow-[0_4px_12px_rgba(0,0,0,0.08)] transition sm:w-full"
+              className="oasis-primary-button w-full"
             >
               Continue
-              <span className="ml-2">→</span>
+              <span aria-hidden="true">→</span>
             </button>
           </div>
         </>
@@ -1798,14 +1803,14 @@ function App() {
             labels={rules.labels}
           />
 
-          <div className="mt-5 flex flex-col gap-3">
+          <div className="mt-6 flex flex-col gap-3">
             <button
               type="button"
               onClick={() => {
                 clearFeedback()
                 setCurrentStep(2)
               }}
-              className="min-h-[52px] w-full rounded-[10px] border border-[#d9d9d9] bg-white px-5 text-[15px] font-semibold text-[#222] transition hover:bg-[#f7f7f5]"
+              className="oasis-secondary-button w-full"
             >
               ← Back
             </button>
@@ -1817,10 +1822,10 @@ function App() {
                 setCurrentStep(4)
               }}
               disabled={!form.vehicle}
-              className="oasis-primary-button min-h-[52px] w-full rounded-[10px] px-5 text-[15px] font-semibold transition disabled:opacity-40"
+              className="oasis-primary-button w-full disabled:opacity-40"
             >
               Review
-              <span className="ml-2">→</span>
+              <span aria-hidden="true">→</span>
             </button>
           </div>
         </>
@@ -1840,7 +1845,7 @@ function App() {
                 clearFeedback()
                 setCurrentStep(3)
               }}
-              className="mb-3 min-h-[52px] w-full rounded-[10px] border border-[#d9d9d9] bg-white px-5 text-[15px] font-semibold text-[#222] transition hover:bg-[#f7f7f5]"
+              className="oasis-secondary-button mb-4 w-full"
             >
               ← Back to Vehicle
             </button>
@@ -1850,18 +1855,7 @@ function App() {
             type="button"
             onClick={calculateQuote}
             disabled={isCalculating}
-            className="
-                w-full
-                min-h-[52px]
-                rounded-[10px]
-                px-5 py-3
-                font-semibold
-                transition-colors
-                oasis-primary-button
-                disabled:cursor-wait
-                disabled:opacity-70
-                my-1
-            "
+            className="oasis-primary-button w-full my-1 disabled:cursor-wait disabled:opacity-70"
           >
             {isCalculating
               ? "Calculating your quote..."
@@ -1909,7 +1903,7 @@ function App() {
                     clearFeedback()
                     setCurrentStep(3)
                   }}
-                  className="min-h-[52px] w-full rounded-[10px] border border-[#d9d9d9] bg-white px-5 text-[15px] font-semibold text-[#222] transition hover:bg-[#f7f7f5]"
+                  className="oasis-secondary-button w-full"
                 >
                   ← Back to Vehicle
                 </button>

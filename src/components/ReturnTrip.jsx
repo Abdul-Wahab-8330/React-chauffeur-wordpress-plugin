@@ -6,13 +6,13 @@ function ReturnTrip({
     form,
 }) {
     const inputClass =
-    "oasis-field w-full min-h-[50px] rounded-[9px] border border-[#d8d8d8] bg-white px-4 py-[12px] text-[15px] text-[#222] outline-none transition focus:border-[#b58a32] focus:shadow-[0_0_0_2px_rgba(181,138,50,0.10)]"
+    "oasis-field"
 
     const addressInputClass =
-    "oasis-google-address w-full !min-h-[50px] !rounded-[9px] !px-4 !text-[15px]"
+    "oasis-google-address is-compact !px-4 !text-[15px]"
 
     const labelClass =
-    "mb-[8px] block text-[12px] font-semibold uppercase tracking-[0.04em] text-[#444]"
+    "oasis-label"
 
     const update = (field, value) => {
         form.onChange(field, value)
@@ -90,27 +90,23 @@ function ReturnTrip({
     }
 
     return (
-        <section className="oasis-card oasis-return-trip mb-[22px] mt-[12px] overflow-hidden rounded-[14px] border border-[#e5e5e5] bg-white shadow-[0_2px_14px_rgba(0,0,0,0.025)]">
-            <div className="border-none  px-5 py-5 sm:px-6">
-                <div className="flex items-start justify-between gap-4">
-                    <div>
-                        <p className="mb-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-[#9a762d]">
+        <section className="oasis-card oasis-return-trip mb-[28px] mt-2 overflow-hidden p-6 sm:p-7">
+            <div className="mb-6">
+                        <p className="oasis-eyebrow">
                             Optional
                         </p>
 
-                        <h3 className="m-0 text-[19px] font-semibold tracking-[-0.015em] text-[#222]">
+                        <h3 className="oasis-section-title">
                             Return Trip
                         </h3>
 
-                        <p className="mt-1 text-[12px] leading-[1.5] text-[#6d6d6d]">
+                        <p className="oasis-section-description">
                             Add a separate return journey to your booking.
                         </p>
-                    </div>
-                </div>
             </div>
 
-            <div className="px-5 pt-5 sm:px-6">
-                <div className="oasis-choice-toggle grid grid-cols-2 gap-2 rounded-[10px] bg-[#f6f6f4] p-1">
+            <div>
+                <div className="oasis-choice-toggle grid grid-cols-2 gap-2">
                     <button
                         type="button"
                         onClick={() => onChange(true)}
@@ -136,7 +132,7 @@ function ReturnTrip({
             </div>
 
             {enabled && (
-                <div className="mt-6 grid grid-cols-1 gap-4 px-5 pb-5 md:grid-cols-2 sm:px-6 sm:pb-6">
+                <div className="mt-6 grid grid-cols-1 gap-5 md:grid-cols-2">
 
                     {/* Return Pickup Date */}
                     <div>

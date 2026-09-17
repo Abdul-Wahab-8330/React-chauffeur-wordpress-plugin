@@ -68,36 +68,36 @@ function JourneyDetails({
     }
 
     const inputClass =
-        "oasis-field w-full min-h-[46px] rounded-[5px] border bg-white px-3 py-[10px] text-[15px] text-[#222] outline-none"
+        "oasis-field"
 
     const addressInputClass =
-        "oasis-google-address w-full !min-h-[54px] !rounded-[10px] !px-4 !text-[15px]"
+        "oasis-google-address !px-4 !text-[15px]"
 
     const labelClass =
-        "mb-[7px] block text-[13px] font-semibold text-[#222]"
+        "oasis-label"
 
     const fieldClass =
         "min-w-0"
 
     const journeyCardClass = showAdditionalDetails
-        ? "mb-6 rounded-[14px] border-none bg-white p-4 shadow-[0_2px_14px_rgba(0,0,0,0.025)] sm:p-5"
-        : "oasis-journey-card--essential mb-7 rounded-[16px] border-none bg-white p-5 shadow-[0_8px_28px_rgba(24,24,20,0.045)] sm:p-7"
+        ? "mb-7 p-6 sm:p-7"
+        : "oasis-journey-card--essential p-6 sm:p-8"
 
     const sectionHeadingClass = showAdditionalDetails
-        ? "m-0 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#a07c18]"
-        : "m-0 text-[11px] font-semibold uppercase tracking-[0.16em] text-[#8a6a24]"
+        ? "oasis-eyebrow text-[10px]"
+        : "oasis-eyebrow"
 
     const titleClass = showAdditionalDetails
-        ? "m-0 mt-1 text-[20px] font-semibold tracking-[-0.02em] text-[#222]"
-        : "m-0 mt-1 text-[23px] font-semibold tracking-[-0.025em] text-[#222]"
+        ? "oasis-section-title text-[20px]"
+        : "oasis-section-title"
 
     const descriptionClass = showAdditionalDetails
-        ? "m-0 mt-1 text-[12px] leading-[1.5] text-[#777]"
-        : "m-0 mt-2 text-[13px] leading-[1.55] text-[#777]"
+        ? "oasis-section-description text-[12px]"
+        : "oasis-section-description"
 
     const essentialFieldsClass = showAdditionalDetails
-        ? "space-y-4"
-        : "space-y-5"
+        ? "space-y-5"
+        : "space-y-6"
 
     return (
         <section className={`oasis-card  ${journeyCardClass}`}>
@@ -240,17 +240,7 @@ function JourneyDetails({
                                 )
                             }
                             required
-                            className="
-                    oasis-field w-full min-h-[54px]
-                    rounded-[10px]
-                    border border-[#d8d8d8]
-                    bg-white
-                    px-3
-                    py-[10px]
-                    text-[15px]
-                    text-[#222]
-                    outline-none
-                "
+                            className="oasis-field"
                         />
                     </div>
 
@@ -280,17 +270,7 @@ function JourneyDetails({
                                 )
                             }
                             required
-                            className="
-                    oasis-field w-full min-h-[54px]
-                    rounded-[10px]
-                    border border-[#d8d8d8]
-                    bg-white
-                    px-3
-                    py-[10px]
-                    text-[15px]
-                    text-[#222]
-                    outline-none
-                "
+                            className="oasis-field"
                         />
                     </div>
 
@@ -300,14 +280,14 @@ function JourneyDetails({
 
             {/* Additional journey details */}
             {showAdditionalDetails && (
-                <div className="oasis-additional-details mt-6 border-t border-[#eeeeec] pt-5">
+                <div className="oasis-additional-details mt-7">
 
-                    <div className="mb-4">
-                        <p className="m-0 text-[10px] font-semibold uppercase tracking-[0.14em] text-[#a07c18]">
+                    <div className="mb-5">
+                        <p className="oasis-eyebrow text-[10px]">
                             Additional details
                         </p>
 
-                        <p className="m-0 mt-1 text-[12px] text-[#777]">
+                        <p className="oasis-section-description mt-1 text-[12px]">
                             Help us prepare the right journey for you.
                         </p>
                     </div>
@@ -478,14 +458,14 @@ function JourneyDetails({
 
             {/* Airport Flight Information */}
             {showAdditionalDetails && showFlightSection && (
-                <div className="oasis-airport-flight mt-4">
+                <div className="oasis-airport-flight mt-5">
 
-                    <div className="rounded-[6px] border border-[#e5e5e5] bg-[#fafafa] px-4 py-[14px]">
+                    <div className="rounded-[14px] border border-[#e6d9ae] bg-[#fffaf0]/80 px-5 py-4">
                         <strong className="text-[15px] text-[#222]">
                             Airport Flight Information
                         </strong>
 
-                        <p className="mt-[5px] text-[12px] text-[#6d6d6d]">
+                        <p className="mt-[6px] text-[12px] leading-[1.55] text-[#77776f]">
                             If an airport is selected, enter a flight
                             number or select No Flight.
                         </p>
@@ -516,7 +496,7 @@ function JourneyDetails({
                             />
                         </div>
 
-                        <label className="flex flex-col cursor-pointer items-center gap-2 font-medium text-[#222]">
+                        <label className="flex cursor-pointer items-center gap-2.5 font-medium text-[#222]">
                             <input
                                 type="checkbox"
                                 id="oasis-no-flight"
@@ -527,7 +507,7 @@ function JourneyDetails({
                                         e.target.checked
                                     )
                                 }
-                                className="oasis-checkbox h-4 w-4"
+                                className="oasis-checkbox"
                             />
 
                             <span>No Flight</span>

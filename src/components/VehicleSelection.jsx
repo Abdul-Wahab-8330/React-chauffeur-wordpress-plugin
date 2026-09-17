@@ -1,10 +1,10 @@
 function VehicleSelection({ vehicles, vehicleImages, recommendations, selectedVehicle, onSelect, labels }) {
     return (
-        <section className="oasis-card oasis-vehicle-selection mb-6 rounded-[16px] border border-[#e5e5e5] bg-white p-5 shadow-[0_8px_28px_rgba(24,24,20,0.045)] sm:p-7">
-            <div className="mb-5">
-                <p className="m-0 text-[11px] font-semibold uppercase tracking-[0.14em] text-[#8a6a24]">Step 03</p>
-                <h3 className="m-0 mt-1 text-[23px] font-semibold tracking-[-0.025em] text-[#222]">Choose your vehicle</h3>
-                <p className="m-0 mt-2 text-[13px] leading-[1.55] text-[#6d6d6d]">
+        <section className="oasis-card oasis-vehicle-selection mb-7 p-6 sm:p-8">
+            <div className="mb-7">
+                <p className="oasis-eyebrow">Step 03</p>
+                <h3 className="oasis-section-title">Choose your vehicle</h3>
+                <p className="oasis-section-description">
                     {labels.recommended} based on your passenger, luggage and child-seat requirements.
                 </p>
             </div>
@@ -26,7 +26,10 @@ function VehicleSelection({ vehicles, vehicleImages, recommendations, selectedVe
                             className={`oasis-vehicle-option ${selected ? "is-selected" : ""} ${!item.suitable ? "is-unavailable" : ""}`}
                         >
                             <div className="oasis-vehicle-head">
-                                <p className="oasis-vehicle-name">{vehicle.name}</p>
+                                <p className="oasis-vehicle-name">
+                                    {vehicle.name}
+                                    <span className="oasis-vehicle-similar"> or similar</span>
+                                </p>
 
                                 <span className={`oasis-availability-badge shrink-0 ${item.suitable ? "is-suitable" : "is-unsuitable"}`}>
                                     {item.suitable ? "Suitable" : "Not suitable"}

@@ -25,23 +25,23 @@ function PassengerLuggage({
         }
 
         return (
-            <div className="oasis-quantity-card rounded-[10px] border border-[#e5e5e5] bg-white p-4">
-                <div className="mb-3 text-[12px] font-semibold uppercase tracking-[0.04em] text-[#444]">
+            <div className="oasis-quantity-card p-5">
+                <div className="mb-3 text-[12px] font-semibold uppercase tracking-[0.06em] text-[#55554f]">
                     {label}
                 </div>
 
-                <div className="flex min-h-[50px] items-center justify-between rounded-[9px] border border-[#d8d8d8] bg-white px-2">
+                <div className="flex min-h-[54px] items-center justify-between rounded-[16px] border border-[#e3e2da] bg-white/85 px-2.5">
                     <button
                         type="button"
                         onClick={decrease}
                         disabled={numericValue <= min}
                         aria-label={`Decrease ${label}`}
-                        className="oasis-quantity-button flex h-10 w-10 items-center justify-center rounded-[7px] text-[22px] text-[#333] transition disabled:cursor-not-allowed disabled:opacity-30"
+                        className="oasis-quantity-button h-11 w-11 text-[20px] disabled:cursor-not-allowed disabled:opacity-30"
                     >
                         −
                     </button>
 
-                    <span className="min-w-[40px] text-center text-[17px] font-semibold text-[#222]">
+                    <span className="min-w-[40px] text-center text-[18px] font-semibold text-[#222]">
                         {numericValue}
                     </span>
 
@@ -49,7 +49,7 @@ function PassengerLuggage({
                         type="button"
                         onClick={increase}
                         aria-label={`Increase ${label}`}
-                        className="oasis-quantity-button flex h-10 w-10 items-center justify-center rounded-[7px] text-[22px] text-[#333] transition"
+                        className="oasis-quantity-button h-11 w-11 text-[20px]"
                     >
                         +
                     </button>
@@ -59,22 +59,22 @@ function PassengerLuggage({
     }
 
     return (
-        <section className="oasis-card oasis-passenger-luggage mb-[22px] overflow-hidden rounded-[14px] border border-[#e5e5e5] bg-white shadow-[0_2px_14px_rgba(0,0,0,0.025)]">
-            <div className="border-none px-5 py-5 sm:px-6">
-                <p className="mb-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-[#9a762d]">
+        <section className="oasis-card oasis-passenger-luggage mb-[28px] overflow-hidden p-6 sm:p-7">
+            <div className="mb-6">
+                <p className="oasis-eyebrow">
                     Travellers
                 </p>
 
-                <h3 className="m-0 text-[19px] font-semibold tracking-[-0.015em] text-[#222]">
+                <h3 className="oasis-section-title">
                     Passenger &amp; Luggage
                 </h3>
 
-                <p className="mt-1 text-[12px] leading-[1.5] text-[#6d6d6d]">
+                <p className="oasis-section-description">
                     Tell us how many passengers and bags are travelling.
                 </p>
             </div>
 
-            <div className="grid grid-cols-1 gap-3 p-5 sm:grid-cols-2 sm:p-6">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <QuantityField
                     label="Passengers"
                     value={form.passengers}
@@ -102,23 +102,23 @@ function PassengerLuggage({
                     }
                 />
 
-                <div className="oasis-luggage-guide rounded-[10px] border border-[#e8e8e8] bg-[#fafaf8] px-6 py-5">
-                    <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.08em] text-[#777]">
+                <div className="oasis-luggage-guide px-6 py-5">
+                    <p className="oasis-eyebrow mb-2 text-[10px] text-[#8a7a4a]">
                         Luggage Guide
                     </p>
 
-                    <p className="m-0  text-[12px] leading-[1.55] text-[#666]">
+                    <p className="m-0 text-[12px] leading-[1.6] text-[#77776f]">
                         {luggageInstruction}
                     </p>
                 </div>
             </div>
 
-            <div className="oasis-luggage-total mx-6 mb-5 mt-2 flex items-center justify-between border-none bg-[#fafaf8] px-6 py-3 sm:mx-6 sm:mb-8">
-                <span className="text-[12px] font-medium text-[#666]">
+            <div className="oasis-luggage-total mx-7 mb-7 mt-2 flex items-center justify-between px-6 py-3.5">
+                <span className="text-[12px] font-medium text-[#77776f]">
                     Total luggage units
                 </span>
 
-                <strong className="text-[15px] font-semibold text-[#222]">
+                <strong className="text-[16px] font-semibold text-[#222]">
                     {luggageUnits}
                 </strong>
             </div>

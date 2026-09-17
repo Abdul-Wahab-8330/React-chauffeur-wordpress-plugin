@@ -6,16 +6,16 @@ function AdditionalStops({
 }) {
     return (
         <section className="oasis-card oasis-additional-stops mb-[22px] overflow-hidden rounded-[14px] border border-[#e5e5e5] bg-white shadow-[0_2px_14px_rgba(0,0,0,0.025)]">
-            <div className="border-b border-[#eeeeee] px-5 py-5 sm:px-6">
-                <p className="mb-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-[#9a762d]">
+            <div className="mb-6">
+                <p className="oasis-eyebrow">
                     Hourly / As Directed
                 </p>
 
-                <h3 className="m-0 text-[19px] font-semibold tracking-[-0.015em] text-[#222]">
+                <h3 className="oasis-section-title">
                     Additional Stops
                 </h3>
 
-                <p className="mt-1 text-[12px] leading-[1.5] text-[#6d6d6d]">
+                <p className="oasis-section-description">
                     Add any stops you would like to make during your
                     journey.
                 </p>

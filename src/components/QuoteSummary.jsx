@@ -13,21 +13,23 @@ function QuoteSummary({
         `${currency}${Number(value || 0).toFixed(2)}`
 
     return (
-        <section className="oasis-card oasis-quote-summary mt-6 rounded-[16px] border border-[#dedede] bg-white p-[26px]">
+        <section className="oasis-card oasis-quote-summary mt-7 p-7 sm:p-8">
             <div>
-                <h3 className="mt-1 mb-1 text-[21px] font-semibold text-[#222]">
+                <p className="oasis-eyebrow">Step 04</p>
+
+                <h3 className="oasis-section-title mb-1">
                     {labels.summary}
                 </h3>
 
-                <p className="m-0 text-[13px] text-[#666]">
+                <p className="oasis-section-description">
                     Your estimated booking quote.
                 </p>
             </div>
 
             {/* Outbound */}
             {quote.outbound && (
-                <div className="mt-[18px] border-t border-[#eee] pt-3 pb-5">
-                    <h4 className="m-0 mb-1 font-semibold text-[#222]">
+                <div className="mt-5 border-t border-[rgba(34,34,30,0.07)] pt-5 pb-6">
+                    <h4 className="m-0 mb-2 text-[13px] font-semibold uppercase tracking-[0.06em] text-[#55554f]">
                         Outbound Journey
                     </h4>
 
@@ -41,8 +43,8 @@ function QuoteSummary({
 
             {/* Inbound / Return */}
             {quote.inbound && (
-                <div className="mt-[18px] border-t border-[#eee] pt-3">
-                    <h4 className="m-0 mb-1 font-semibold text-[#222]">
+                <div className="mt-5 border-t border-[rgba(34,34,30,0.07)] pt-5">
+                    <h4 className="m-0 mb-2 text-[13px] font-semibold uppercase tracking-[0.06em] text-[#55554f]">
                         Return Journey
                     </h4>
 
@@ -56,7 +58,7 @@ function QuoteSummary({
 
             {/* Single journey */}
             {!quote.outbound && (
-                <div className="mt-[18px] border-t border-[#eee] pt-3">
+                <div className="mt-5 border-t border-[rgba(34,34,30,0.07)] pt-5">
                     <QuoteRows
                         quote={quote}
                         currency={currency}
@@ -69,10 +71,10 @@ function QuoteSummary({
             {quote.outbound && (
                 <>
                     {Number(quote.babySeats || 0) > 0 && (
-                        <div className="mt-[18px] flex justify-between gap-5 border-t border-[#eee] pt-3">
-                            <span className="text-[#666]">
+                        <div className="mt-5 flex justify-between gap-5 border-t border-[rgba(34,34,30,0.07)] pt-4">
+                            <span className="text-[#55554f]">
                                 Baby Seats{" "}
-                                <span className="text-[12px] font-normal text-[#777]">
+                                <span className="text-[12px] font-normal text-[#77776f]">
                                     {quote.babySeats} ($25 each)
                                 </span>
                             </span>
@@ -85,9 +87,9 @@ function QuoteSummary({
 
                     {Number(quote.boosterSeats || 0) > 0 && (
                         <div className="flex justify-between gap-5 py-[9px]">
-                            <span className="text-[#666]">
+                            <span className="text-[#55554f]">
                                 Booster Seats{" "}
-                                <span className="text-[12px] font-normal text-[#777]">
+                                <span className="text-[12px] font-normal text-[#77776f]">
                                     {quote.boosterSeats} ($11 each)
                                 </span>
                             </span>
@@ -101,12 +103,12 @@ function QuoteSummary({
             )}
 
             {/* Total */}
-            <div className="mt-4 flex items-center justify-between gap-5 border-t-2 border-[#222] pt-5 text-[20px]">
-                <span className="font-semibold">
+            <div className="mt-6 flex items-center justify-between gap-5 rounded-[18px] border border-[rgba(201,162,39,0.3)] bg-gradient-to-br from-[#fffaf0] to-[#fdf6e3] px-6 py-5 shadow-[0_6px_20px_rgba(201,162,39,0.1)]">
+                <span className="text-[16px] font-semibold text-[#222]">
                     {labels.total}
                 </span>
 
-                <strong>
+                <strong className="text-[26px] font-bold tracking-[-0.02em] text-[#1e1a0d]">
                     {money(quote.total)}
                 </strong>
             </div>
@@ -115,11 +117,14 @@ function QuoteSummary({
                 type="button"
                 onClick={onProceedToCheckout}
                 disabled={isCreatingBooking}
-                className="oasis-primary-button mt-5 w-full min-h-[52px] rounded-[10px] px-5 py-4 font-semibold transition disabled:cursor-wait disabled:opacity-70"
+                className="oasis-checkout-button mt-6 disabled:cursor-wait disabled:opacity-70"
             >
                 {isCreatingBooking
                     ? "Preparing checkout..."
                     : labels.proceedCheckout}
+                {!isCreatingBooking && (
+                    <span aria-hidden="true">→</span>
+                )}
             </button>
         </section>
     )
@@ -136,8 +141,8 @@ function QuoteRows({
 
     return (
         <div>
-            <div className="flex justify-between gap-5 py-[9px]">
-                <span className="text-[#666]">
+            <div className="flex justify-between gap-5 py-[10px]">
+                <span className="text-[#55554f]">
                     {labels.distance}
                 </span>
 
@@ -146,8 +151,8 @@ function QuoteRows({
                 </strong>
             </div>
 
-            <div className="flex justify-between gap-5 py-[9px]">
-                <span className="text-[#666]">
+            <div className="flex justify-between gap-5 py-[10px]">
+                <span className="text-[#55554f]">
                     {labels.baseFare}
                 </span>
 
@@ -157,8 +162,8 @@ function QuoteRows({
             </div>
 
             {quote.distanceFare !== undefined && (
-                <div className="flex justify-between gap-5 py-[9px]">
-                    <span className="text-[#666]">
+                <div className="flex justify-between gap-5 py-[10px]">
+                    <span className="text-[#55554f]">
                         {labels.distanceFare}
                     </span>
 
@@ -169,8 +174,8 @@ function QuoteRows({
             )}
 
             {quote.hourlyFare !== undefined && (
-                <div className="flex justify-between gap-5 py-[9px]">
-                    <span className="text-[#666]">
+                <div className="flex justify-between gap-5 py-[10px]">
+                    <span className="text-[#55554f]">
                         Hourly Fare
                     </span>
 
@@ -180,8 +185,8 @@ function QuoteRows({
                 </div>
             )}
 
-            <div className="flex justify-between gap-5 py-[9px]">
-                <span className="text-[#666]">
+            <div className="flex justify-between gap-5 py-[10px]">
+                <span className="text-[#55554f]">
                     {labels.levy}
                 </span>
 
@@ -191,8 +196,8 @@ function QuoteRows({
             </div>
 
             {Number(quote.parking || 0) > 0 && (
-                <div className="flex justify-between gap-5 py-[9px]">
-                    <span className="text-[#666]">
+                <div className="flex justify-between gap-5 py-[10px]">
+                    <span className="text-[#55554f]">
                         {labels.parking}
                     </span>
 
@@ -202,8 +207,8 @@ function QuoteRows({
                 </div>
             )}
 
-            <div className="flex justify-between gap-5 py-[9px]">
-                <span className="text-[#666]">
+            <div className="flex justify-between gap-5 py-[10px]">
+                <span className="text-[#55554f]">
                     {labels.tolls}
                 </span>
 
@@ -213,10 +218,10 @@ function QuoteRows({
             </div>
 
             {Number(quote.babySeats || 0) > 0 && (
-                <div className="flex justify-between gap-5 py-[9px]">
-                    <span className="text-[#666]">
+                <div className="flex justify-between gap-5 py-[10px]">
+                    <span className="text-[#55554f]">
                         Baby Seats{" "}
-                        <span className="text-[12px] font-normal text-[#777]">
+                        <span className="text-[12px] font-normal text-[#77776f]">
                             {quote.babySeats} ($25 each)
                         </span>
                     </span>
@@ -228,10 +233,10 @@ function QuoteRows({
             )}
 
             {Number(quote.boosterSeats || 0) > 0 && (
-                <div className="flex justify-between gap-5 py-[9px]">
-                    <span className="text-[#666]">
+                <div className="flex justify-between gap-5 py-[10px]">
+                    <span className="text-[#55554f]">
                         Booster Seats{" "}
-                        <span className="text-[12px] font-normal text-[#777]">
+                        <span className="text-[12px] font-normal text-[#77776f]">
                             {quote.boosterSeats} ($11 each)
                         </span>
                     </span>
