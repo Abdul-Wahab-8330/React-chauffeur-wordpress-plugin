@@ -16,9 +16,9 @@ export const vehicles = {
         },
 
         hourly: {
-            rate: 85,
-            baseFare: 50,
-            after4HoursBaseFare: 25,
+            rate: 120,
+            baseFare: 75,
+            after4HoursBaseFare: 35,
         },
     },
 
@@ -33,14 +33,14 @@ export const vehicles = {
         },
 
         pricing: {
-            baseFare: 95,
-            distanceRate11to100: 4.50,
-            distanceRate101plus: 3.25,
+            baseFare: 85,
+            distanceRate11to100: 3.50,
+            distanceRate101plus: 3,
         },
 
         hourly: {
-            rate: 120,
-            baseFare: 75,
+            rate: 85,
+            baseFare: 50,
             after4HoursBaseFare: 25,
         },
     },
@@ -64,6 +64,7 @@ export const vehicles = {
         hourly: {
             rate: 110,
             baseFare: 75,
+            after4HoursBaseFare: 35,
         },
     },
 
@@ -86,6 +87,7 @@ export const vehicles = {
         hourly: {
             rate: 150,
             baseFare: 75,
+            after4HoursBaseFare: 35,
         },
     },
 
@@ -108,6 +110,7 @@ export const vehicles = {
         hourly: {
             rate: 110,
             baseFare: 50,
+            after4HoursBaseFare: 25,
         },
     },
 };

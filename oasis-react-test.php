@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Oasis React Booking Plugin
  * Description: A WordPress plugin that integrates a React-based booking system for Oasis.
- * Version: 2.1.1
+ * Version: 2.1.2
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -29,14 +29,14 @@ function oasis_react_booking_assets() {
         'oasis-react-booking',
         plugin_dir_url( __FILE__ ) . 'dist/app.css',
         array(),
-        '2.1.1'
+        '2.1.2'
     );
 
    wp_enqueue_script(
     'oasis-react-booking',
     plugin_dir_url( __FILE__ ) . 'dist/app.js',
     array(),
-    '2.1.1',
+    '2.1.2',
     true
 );
 
