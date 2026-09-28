@@ -77,13 +77,77 @@ function GoogleStopInput({
                     }
                 )
 
-                /* Free-typed text (no suggestion picked). */
+                /*
+                 * Free-typed text and post-select modifications.
+                 *
+                 * The composed "input" event fires on every keystroke
+                 * from the element's internal input in every modern
+                 * browser, with none of "gmp-change"'s
+                 * prediction-session semantics, so state always holds
+                 * exactly what is visible in the field.
+                 */
                 autocomplete.addEventListener(
-                    "gmp-change",
+                    "input",
                     () => {
-                        onChangeRef.current(
-                            clamp(autocomplete.value)
+                        const live = clamp(
+                            autocomplete.value
                         )
+
+                        if (live !== valueRef.current) {
+                            onChangeRef.current(live)
+                        }
+                    }
+                )
+
+                /*
+                 * Final-commit safety net: whatever the user left in
+                 * the field is committed when they leave it (click
+                 * away, Tab, or Add Stop). "change" fires on commit
+                 * for the custom element in Chrome/Edge/Safari/Firefox;
+                 * "focusout" catches any missed blur path because it
+                 * bubbles from the internal input to the host.
+                 */
+                autocomplete.addEventListener(
+                    "change",
+                    () => {
+                        const live = clamp(
+                            autocomplete.value
+                        )
+
+                        if (live !== valueRef.current) {
+                            onChangeRef.current(live)
+                        }
+                    }
+                )
+
+                autocomplete.addEventListener(
+                    "focusout",
+                    () => {
+                        const live = clamp(
+                            autocomplete.value
+                        )
+
+                        if (live !== valueRef.current) {
+                            onChangeRef.current(live)
+                        }
+                    }
+                )
+
+                /* Enter commits the typed value immediately. */
+                autocomplete.addEventListener(
+                    "keydown",
+                    (event) => {
+                        if (event.key === "Enter") {
+                            const live = clamp(
+                                autocomplete.value
+                            )
+
+                            if (
+                                live !== valueRef.current
+                            ) {
+                                onChangeRef.current(live)
+                            }
+                        }
                     }
                 )
 
@@ -116,10 +180,18 @@ function GoogleStopInput({
         }
     }, [])
 
-    /* Sync external value changes (draft restore, resets). */
+    /*
+     * Sync external value changes (draft restore, resets) — but
+     * never clobber an in-progress edit: only write when the
+     * external value actually differs from what the element shows.
+     */
     useEffect(() => {
         if (autocompleteRef.current) {
-            autocompleteRef.current.value = value || ""
+            const shown = autocompleteRef.current.value || ""
+
+            if (shown !== (value || "")) {
+                autocompleteRef.current.value = value || ""
+            }
         }
     }, [value])
 
