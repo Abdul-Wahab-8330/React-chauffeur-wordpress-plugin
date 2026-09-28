@@ -45,7 +45,7 @@ const bookingRules = {
   general: {
     currency: "$",
     testDistanceKm: 25,
-    pointToPointMaxDistanceKm: 200,
+    pointToPointMaxDistanceKm: 400,
   },
 
   charges: {
@@ -169,7 +169,9 @@ const bookingRules = {
       "Please enter a flight number or select No Flight.",
 
     pointToPointDistanceExceeded:
-      "Bookings above 200KM distance limit require contacting Oasis.",
+      /* Placeholder only — overwritten at module load below
+         with the configured pointToPointMaxDistanceKm value. */
+      "__P2P_DISTANCE_EXCEEDED__",
 
     hourlyLimitExceeded:
       "Hourly bookings are limited to 12 hours and 60 km. For bookings exceeding these limits, please select Point-to-Point / Return Trip or contact us.",
@@ -269,6 +271,15 @@ const bookingRules = {
       "Proceed to Checkout",
   },
 }
+
+
+/*
+ * Keep the user-facing distance message in sync with the
+ * configured limit — single source of truth, so the text
+ * can never go stale when the limit changes again.
+ */
+bookingRules.messages.pointToPointDistanceExceeded =
+  `Bookings above ${bookingRules.general.pointToPointMaxDistanceKm}KM distance limit require contacting Oasis.`
 
 
 function App() {

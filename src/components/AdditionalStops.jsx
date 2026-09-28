@@ -1,3 +1,5 @@
+import GoogleStopInput from "./GoogleStopInput"
+
 function AdditionalStops({
     stops,
     onAddStop,
@@ -27,15 +29,15 @@ function AdditionalStops({
                         key={index}
                         className="oasis-stop-row mb-2 flex items-center gap-2"
                     >
-                        <input
-                            type="text"
+                        <GoogleStopInput
                             value={stop}
-                            maxLength={255}
-                            onChange={(e) =>
-                                onStopChange(index, e.target.value)
+                            onChange={(stopValue) =>
+                                onStopChange(index, stopValue)
                             }
                             placeholder={`Stop ${index + 1}`}
-                            className="oasis-stop-input min-h-[44px] w-full min-w-0 rounded-[8px] border border-[#d8d8d8] bg-white px-3 py-2 text-[14px] text-[#222] outline-none transition placeholder:text-[#999] focus:border-[#b58a32] focus:shadow-[0_0_0_2px_rgba(181,138,50,0.10)]"
+                            className="oasis-stop-input"
+                            wrapperClassName="oasis-stop-field"
+                            maxLength={255}
                         />
 
                         <button

@@ -1403,6 +1403,67 @@
   }
 }
 
+/*
+ * ------------------------------------------------------------
+ * Additional Stops — Google Places autocomplete element
+ *
+ * GoogleStopInput renders a gmp-place-autocomplete custom
+ * element inside a .oasis-stop-field wrapper. Google's internal
+ * input and dropdown live in shadow DOM, so WordPress / XStore
+ * CSS physically cannot reach them; only the host and wrapper
+ * need our hardening pattern.
+ * ------------------------------------------------------------
+ */
+
+/* Flex anchor: sizing moves from the input to this wrapper
+   (replaces what .oasis-stop-input did for the native input). */
+#root.oasis-booking-app .oasis-additional-stops .oasis-stop-field {
+  display: block !important;
+  flex: 1 1 auto !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  margin: 0 !important;
+  position: relative !important;
+}
+
+/* Host element carries .oasis-stop-input, so the existing glass
+   border / background / focus ring apply unchanged. Only deltas:
+   the fixed 48px height would clip Google's internal layout. */
+#root.oasis-booking-app .oasis-additional-stops gmp-place-autocomplete.oasis-stop-input {
+  height: auto !important;
+  min-height: 48px !important;
+}
+
+/* Keep the open suggestion dropdown above later glass cards. */
+#root.oasis-booking-app .oasis-additional-stops .oasis-stop-row:focus-within {
+  position: relative !important;
+  z-index: 60 !important;
+}
+
+/* The card's overflow:hidden would clip the dropdown near the
+   card bottom. Move corner clipping to the inner blocks — same
+   delegation pattern this card already uses for padding. */
+#root.oasis-booking-app .oasis-additional-stops {
+  overflow: visible !important;
+}
+
+#root.oasis-booking-app .oasis-additional-stops > div:first-child {
+  border-radius:
+    var(--oasis-radius-card) var(--oasis-radius-card) 0 0 !important;
+}
+
+#root.oasis-booking-app .oasis-additional-stops > div:last-child {
+  border-radius:
+    0 0 var(--oasis-radius-card) var(--oasis-radius-card) !important;
+}
+
+/* Mobile: match the existing 639px stop-input overrides. */
+@media (max-width: 639px) {
+  #root.oasis-booking-app .oasis-additional-stops gmp-place-autocomplete.oasis-stop-input {
+    min-height: 46px !important;
+  }
+}
+
 
 
 .oasis-vehicle-similar {

@@ -406,7 +406,7 @@ export function validatePointToPointDistance(
 ) {
     const maximum =
         Number(
-            rules.general?.pointToPointMaxDistanceKm || 200
+            rules.general?.pointToPointMaxDistanceKm || 400
         )
 
     const value =
